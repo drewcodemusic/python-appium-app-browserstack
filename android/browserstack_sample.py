@@ -21,6 +21,7 @@ driver = webdriver.Remote("http://127.0.0.1:4723/wd/hub", options=options)
 
 # Test case for the BrowserStack sample Android app.
 # If you have uploaded your app, update the test case here.
+'''
 search_element = WebDriverWait(driver, 30).until(
     EC.element_to_be_clickable((AppiumBy.ACCESSIBILITY_ID, "Search Wikipedia"))
 )
@@ -36,3 +37,50 @@ assert (len(search_results) > 0)
 
 # Invoke driver.quit() after the test is done to indicate that the test is completed.
 driver.quit()
+'''
+
+try:
+    
+    # Find and click the 'Load URL' button
+    getStartedbutton = WebDriverWait(driver, 10).until(
+        EC.presence_of_element_located((AppiumBy.XPATH, '//android.widget.FrameLayout[@resource-id="com.elkroom.gamelauncher:id/fragment_container"]/androidx.compose.ui.platform.ComposeView/android.view.View/android.view.View/android.view.View[3]/android.widget.Button'))
+    )
+    getStartedbutton.click()
+    time.sleep(3)
+
+    '''
+    #%% Get attributes
+    print(f'Location:{getStartedbutton.location}')
+    print(f'Size:{getStartedbutton.size}')
+
+    time.sleep(5)
+
+    #%% System actions
+    driver.lock()                       # Lock device
+    driver.unlock()                     # Unlock device                    # Shake device
+    driver.get_screenshot_as_file("startingPage.png")  # Take screenshot
+
+    # Keyboard
+    # driver.hide_keyboard()              # Hide keyboard
+    print("Keyboard is shown:",driver.is_keyboard_shown())          # Check if keyboard visible
+
+    # Orientation
+    driver.orientation                  # Get orientation
+    driver.orientation = "LANDSCAPE"    # Set orientation
+    time.sleep(2)
+    driver.orientation = "PORTRAIT"    # Set orientation
+    time.sleep(2)
+
+    getStartedbutton = WebDriverWait(driver, 10).until(
+        EC.presence_of_element_located((AppiumBy.XPATH, '//android.widget.FrameLayout[@resource-id="com.elkroom.gamelauncher:id/fragment_container"]/androidx.compose.ui.platform.ComposeView/android.view.View/android.view.View/android.view.View[3]/android.widget.Button'))
+    )
+    getStartedbutton.click()
+    time.sleep(5)
+    '''
+
+except Exception as e:
+    print(f"An error occurred: {e}")
+
+finally:
+    # Close the driver
+    driver.quit()
